@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  pokedexapp:
+    depends_on:
+      - db
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      # dockerfile: Dockerfile :: Este es el nombre del archivo, pudiera ser: Dockerfile.prod
+    image: pokedex-docker
+    container_name: pokedexapp
+    restart: always # reiniciar el contenedor si se detiene
+    ports:
+      - "${PORT}:${PORT}"
+    # working_dir: /var/www/pokedex
+    # Cuando etán dentro {} indica que toma los valores del .env
+    environment:
+      MONGODB: ${MONGODB}
+      PORT: ${PORT}
+      DEFAULT_LIMIT: ${DEFAULT_LIMIT}
+    # volumes:
+    #   - ./:/var/www/pokedex
+
+  db:
+    image: mongo:5
+    # Es como el nombre de la computadora, por decir: localhost = mongo-poke
+    container_name: mongo-poke
+    restart: always
+    ports:
+      - 27777:27017
+    environment:
+      MONGODB_DATABASE: nest-pokemon-db-local
+    volumes:
+      - ./mongo-dir:/data/db

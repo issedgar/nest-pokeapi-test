@@ -11,13 +11,14 @@ async function bootstrap() {
         new ValidationPipe({
             whitelist: true,
             forbidNonWhitelisted: true,
-            transform: true,
+            transform: true, // le dice a la tubería que devuelva el valor transformado automáticamente. Si no está configurado, se utilizará el valor entrante original
             transformOptions: {
-                enableImplicitConversion: true
+                enableImplicitConversion: true // Le indica que si ve un primitivo (booleano o number), aunque sea una cadena, asuma que debe ser de tipo primitivo y lo transforme
             }
         })
     );
 
-    await app.listen(3000);
+    await app.listen( process.env.PORT );
+    console.log(`Server ejecutando en puerto: ${ process.env.PORT }`);
 }
 bootstrap();

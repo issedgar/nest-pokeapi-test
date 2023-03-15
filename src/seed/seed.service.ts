@@ -21,7 +21,7 @@ export class SeedService {
 
         await this.pokemonModel.deleteMany({});
 
-        const data = await this.http2.get<PokeResponse>('https://pokeapi.co/api/v2/pokemon?limit=500');
+        const data = await this.http2.get<PokeResponse>('https://pokeapi.co/api/v2/pokemon?limit=12');
         const pokemonToInsert: { name: string, no: number }[] = [];
 
         data.results.forEach(({name, url}) => {
